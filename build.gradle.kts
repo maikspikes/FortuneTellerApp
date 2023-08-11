@@ -13,6 +13,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
+    implementation("com.google.code.gson:gson:2.10.1")
+
     implementation("com.sparkjava:spark-kotlin:1.0.0-alpha")
     implementation("com.sparkjava:spark-core:2.9.4")
     implementation("ch.qos.logback:logback-classic:1.2.6")
