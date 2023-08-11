@@ -11,10 +11,8 @@ public class FortuneTellerService {
     }
 
     public String tellFortune() {
-
         Fortune fortune = this.fortuneStorage.getRandomFortune();
 
         return fortune.getText();
-
     }
 }

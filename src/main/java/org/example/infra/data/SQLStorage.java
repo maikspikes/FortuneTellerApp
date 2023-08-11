@@ -6,19 +6,25 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import org.example.domain.Fortune;
+import org.example.domain.FortuneStorage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class SQLStorage {
-
+public class SQLStorage implements FortuneStorage {
     private ConnectionSource connectionSource;
+
     private Dao<Fortune, String> fortuneDao;
     public SQLStorage(Properties properties) {
         initializeConnection(properties);
         initializeDao();
         createTableIfNotExists();
+    }
+
+    @Override
+    public Fortune getRandomFortune() {
+
+        return new Fortune(100, "Ik ga dit fixen");
     }
 
     private void initializeConnection(Properties properties) {
@@ -33,10 +39,6 @@ public class SQLStorage {
         }
     }
 
-
-
-    // instantiate the DAO to handle Fortune class with String id
-
     private void initializeDao() {
         try {
             fortuneDao = DaoManager.createDao(connectionSource, Fortune.class);
@@ -45,7 +47,6 @@ public class SQLStorage {
         }
     }
 
-    // if you need to create the 'fortunes' table make this call
     private void createTableIfNotExists() {
         try {
             if (!fortuneDao.isTableExists()) {
@@ -55,17 +56,4 @@ public class SQLStorage {
             throw new RuntimeException("Error creating table", e);
         }
     }
-
-    // Close the connection source
-    public void closeConnection() {
-        try {
-            connectionSource.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Error closing connection", e);
-        }
-    }
-
-
-
-
 }
